@@ -1,13 +1,14 @@
-import styles from '../../styles/Feed.module.css'
+import styles from '../../../styles/Feed.module.css'
 import {useRouter} from 'next/router'
-import { Toolbar } from '../../components/toolbar'
+import { Toolbar } from '../../../components/toolbar'
+import { Subtoolbar } from '../../../components/subtoolbar'
 
 export const Feed = ({ pageNumber, articles }) => {
     const router = useRouter()
-    console.log(articles);
     return (
         <div className="page-container">
             <Toolbar/>
+            <Subtoolbar />
             <div className={styles.main}>
                 {articles.map((article, index) => (
                     <div key={index} className= "card" style= {{width: "600px", padding: "10px", margin: "10px"}} >
@@ -42,7 +43,10 @@ export const Feed = ({ pageNumber, articles }) => {
 }
 
 export const getServerSideProps = async pageContext => {
+    
+    const category = pageContext.query.category;
     const pageNumber = pageContext.query.pageid
+
     if (!pageNumber || pageNumber < 0 || pageNumber > 5) {
         return {
             props: {
@@ -53,7 +57,7 @@ export const getServerSideProps = async pageContext => {
     }
 
     const apiResponse = await fetch(
-        `https://newsapi.org/v2/top-headlines?country=in&pageSize=5&page=${pageNumber}`,
+        `https://newsapi.org/v2/top-headlines?country=in&category=${category}&pageSize=5&page=${pageNumber}`,
         {
             headers: {
                 Authorization: `Bearer ${process.env.NEWS_KEY}`

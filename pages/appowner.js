@@ -12,8 +12,7 @@ export const EOM = () => {
                     <img src = {'/img.png'} style= {{padding:"10px"}}/>
                     <p> Cool tech guy who likes to build interesting stuffs </p>
                 </div>
-            </div>
-            
+            </div>      
         </div>
     )
 }
